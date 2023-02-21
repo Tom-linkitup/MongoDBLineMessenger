@@ -5,6 +5,9 @@ import com.example.mongodblinemessenger.repository.LineMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class LineMessageService {
 
@@ -22,6 +25,13 @@ public class LineMessageService {
                 .message(message)
                 .build();
         lineMessageRepository.save(lineMessage);
+    }
+
+    public List<String> findMessageByUser(String userId) {
+        return lineMessageRepository.findByUserId(userId)
+                .stream()
+                .map(LineMessage::getMessage)
+                .collect(Collectors.toList());
     }
 
 
